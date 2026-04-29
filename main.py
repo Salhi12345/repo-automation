@@ -1,14 +1,18 @@
 import os
 import datetime
-import google.generativeai as genai
+from google import genai
 
-# Configuration dyal Gemini
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-model = genai.GenerativeModel('gemini-1.5-flash')
+# Configuration b l-package jdid dyal Google
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
-# Tlbat mn Gemini i-générer code basique
+# Tlbat mn Gemini
 prompt = "Write a simple, short and useful Python code snippet. Output ONLY the code, no markdown, no explanations."
-response = model.generate_content(prompt)
+
+# Génération dyal l-code b l-modèle jdid
+response = client.models.generate_content(
+    model='gemini-2.5-flash',
+    contents=prompt,
+)
 
 # Tssjil l-code f fichier jdid b ttarix dyal lyoum
 date_str = datetime.datetime.now().strftime("%Y-%m-%d")
