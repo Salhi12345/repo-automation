@@ -3,7 +3,7 @@ import datetime
 import google.generativeai as genai
 
 # Configuration dyal Gemini
-genai.configure(api_key=os.environ["AIzaSyCStFRg42Ryk3m-SZ_zMKGwuW64fLyqxn8"])
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Tlbat mn Gemini i-générer code basique
