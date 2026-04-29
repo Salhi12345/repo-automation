@@ -2,26 +2,26 @@ name: Daily Auto Project Generator
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Had l-code kay3ni "khdem kola nhar m3a 00:00"
-  workflow_dispatch: # Hadi katkhlik t-marréh b ydk ila bghiti tjerreb
+    - cron: '0 0 * * *' # Kaykhdem kola nhar m3a 00:00 (GMT)
+  workflow_dispatch: # Hadi katkhlik t-marréh b ydk mn l-onglet "Actions"
 
 permissions:
-  contents: write # Darori bash GitHub Actions y9dar y-pushi l-code
+  contents: write # Darori bash GitHub Actions y9dar y-pushi l-code jdid
 
 jobs:
   generate-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install google-generativeai
+        run: pip install google-genai
 
       - name: Run Gemini Script
         env:
