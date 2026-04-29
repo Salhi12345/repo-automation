@@ -1,0 +1,37 @@
+name: Daily Auto Project Generator
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Had l-code kay3ni "khdem kola nhar m3a 00:00"
+  workflow_dispatch: # Hadi katkhlik t-marréh b ydk ila bghiti tjerreb
+
+permissions:
+  contents: write # Darori bash GitHub Actions y9dar y-pushi l-code
+
+jobs:
+  generate-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install google-generativeai
+
+      - name: Run Gemini Script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python main.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto-generated project for $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push
